@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    background-color: #eee;
+    color: #212121;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+html, body {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    min-width: 320px;
+    max-width: 540px;
+    font-size: 16px;
+    margin: 0 auto;
+    padding-top: 44px;
+}
+
+a {
+    text-decoration: none;
+    color: #333
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left
+}
+
+caption, th {
+    text-align: inherit
+}
+
+ul, ol, menu {
+    list-style: none
+}
+
+fieldset, img {
+    border: 0 none
+}
+
+img, object, input, textarea, button, select {
+    vertical-align: top
+}
+
+article, aside, footer, header, section, nav, figure, figcaption, hgroup, details, menu {
+    display: block
+}
+
+audio, canvas, video {
+    display: block;
+    *display: inline;
+    *zoom: 1
+}
+
+h1, h2, h3, h4, h5, h6, input, textarea, button, select, small {
+    font-size: 100%
+}
+
+address, cite, dfn, em, i, optgroup, var {
+    font-style: normal
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '\0020'
+}
+
+textarea {
+    overflow: auto
+}
+
+.hidden,
+[hidden] {
+    display: none !important;
+}
+
+::-webkit-input-placeholder {
+    color: #c7ced4;
+}
+
+textarea, input {
+    outline: 0
+}
+
+button {
+    border: 0;
+    outline: 0;
+    appearance: none;
+}
