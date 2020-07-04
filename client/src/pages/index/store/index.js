@@ -12,6 +12,6 @@ const enhancer = composeEnhancers(
 )
 
 export default createStore(
-	combineReducers(reducers),
+	combineReducers({ state: reducers }),
 	enhancer
 )

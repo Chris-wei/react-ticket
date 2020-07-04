@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import './App.css';
 //components
-import Header from '../components/Header'
+import Header from '../../components/Header'
 import Journey from './components/Journey'
 import HighSpeed from './components/HighSpeed'
 import DepartDate from './components/DepartDate'
@@ -12,7 +12,7 @@ function App (props) {
 	console.log(props);
 	return (
 		<div className="App">
-			hello world
+			index
 			<Header/>
 			<Journey/>
 			<DepartDate/>

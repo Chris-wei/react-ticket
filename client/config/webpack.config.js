@@ -128,6 +128,15 @@ module.exports = function (webpackEnv) {
 		return loaders;
 	};
 
+	const entry = {}
+	paths.appIndexJs.forEach(e => {
+		entry[e.name] = [
+			isEnvDevelopment &&
+			require.resolve('react-dev-utils/webpackHotDevClient'),
+			e.path
+		].filter(Boolean)
+	});
+
 	return {
 		mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
 		// Stop compilation early in production
@@ -139,12 +148,7 @@ module.exports = function (webpackEnv) {
 			: isEnvDevelopment && 'cheap-module-source-map',
 		// These are the "entry points" to our application.
 		// This means they will be the "root" imports that are included in JS bundle.
-		entry: {
-			index: [paths.appIndexJs, isEnvDevelopment && require.resolve('react-dev-utils/webpackHotDevClient')].filter(Boolean),
-			query: [paths.appQueryJs, isEnvDevelopment && require.resolve('react-dev-utils/webpackHotDevClient')].filter(Boolean),
-			ticket: [paths.appTicketJs, isEnvDevelopment && require.resolve('react-dev-utils/webpackHotDevClient')].filter(Boolean),
-			order: [paths.appOrderJs, isEnvDevelopment && require.resolve('react-dev-utils/webpackHotDevClient')].filter(Boolean),
-		},
+		entry: entry,
 		// entry: [
 		//   // Include an alternative client for WebpackDevServer. A client's job is to
 		//   // connect to WebpackDevServer by a socket and get notified about changes.
@@ -172,14 +176,14 @@ module.exports = function (webpackEnv) {
 			// There will be one main bundle, and one file per asynchronous chunk.
 			// In development, it does not produce real files.
 			filename: isEnvProduction
-				? 'static/js/[name].[contenthash:8].js'
-				: isEnvDevelopment && 'static/js/bundle.js',
+				? 'static/js/[name]/[name].[contenthash:8].js'
+				: isEnvDevelopment && 'static/js/[name]/[name].bundle.js',
 			// TODO: remove this when upgrading to webpack 5
 			futureEmitAssets: true,
 			// There are also additional JS chunk files if you use code splitting.
 			chunkFilename: isEnvProduction
-				? 'static/js/[name].[contenthash:8].chunk.js'
-				: isEnvDevelopment && 'static/js/[name].chunk.js',
+				? 'static/js/[name]/[name].[contenthash:8].chunk.js'
+				: isEnvDevelopment && 'static/js/[name]/[name].chunk.js',
 			// webpack uses `publicPath` to determine where the app is being served from.
 			// It requires a trailing slash, or the file assets will get an incorrect path.
 			// We inferred the "public path" (such as / or /my-project) from homepage.
@@ -515,114 +519,41 @@ module.exports = function (webpackEnv) {
 		},
 		plugins: [
 			// Generates an `index.html` file with the <script> injected.
-			new HtmlWebpackPlugin(
-				Object.assign(
-					{},
-					{
-						inject: true,
-						template: paths.appHtml,
-						fileName: 'index.html',
-						chunks:['index']
-					},
-					isEnvProduction
-						? {
-							minify: {
-								removeComments: true,
-								collapseWhitespace: true,
-								removeRedundantAttributes: true,
-								useShortDoctype: true,
-								removeEmptyAttributes: true,
-								removeStyleLinkTypeAttributes: true,
-								keepClosingSlash: true,
-								minifyJS: true,
-								minifyCSS: true,
-								minifyURLs: true,
-							},
-						}
-						: undefined
+			...Object.keys(paths.entries).map((name) => {
+				let templateName = '';
+				if(name === 'index') templateName = paths.appHtml;
+				else{
+					let tempName = name.slice(0,1).toUpperCase() + name.slice(1)
+					templateName = paths['app' + tempName + 'Html'];
+				}
+				return new HtmlWebpackPlugin(
+					Object.assign(
+						{},
+						{
+							inject: true,
+							chunks: [name],
+							template: templateName,
+							filename: name + '.html',
+						},
+						isEnvProduction
+							? {
+								minify: {
+									removeComments: true,
+									collapseWhitespace: true,
+									removeRedundantAttributes: true,
+									useShortDoctype: true,
+									removeEmptyAttributes: true,
+									removeStyleLinkTypeAttributes: true,
+									keepClosingSlash: true,
+									minifyJS: true,
+									minifyCSS: true,
+									minifyURLs: true,
+								},
+							}
+							: undefined
+					)
 				)
-			),
-			new HtmlWebpackPlugin(
-				Object.assign(
-					{},
-					{
-						inject: true,
-						template: paths.appQueryHtml,
-						fileName: 'query.html',
-						chunks:['query']
-					},
-					isEnvProduction
-						? {
-							minify: {
-								removeComments: true,
-								collapseWhitespace: true,
-								removeRedundantAttributes: true,
-								useShortDoctype: true,
-								removeEmptyAttributes: true,
-								removeStyleLinkTypeAttributes: true,
-								keepClosingSlash: true,
-								minifyJS: true,
-								minifyCSS: true,
-								minifyURLs: true,
-							},
-						}
-						: undefined
-				)
-			),
-			new HtmlWebpackPlugin(
-				Object.assign(
-					{},
-					{
-						inject: true,
-						template: paths.appTicketHtml,
-						fileName: 'ticket.html',
-						chunks:['ticket']
-					},
-					isEnvProduction
-						? {
-							minify: {
-								removeComments: true,
-								collapseWhitespace: true,
-								removeRedundantAttributes: true,
-								useShortDoctype: true,
-								removeEmptyAttributes: true,
-								removeStyleLinkTypeAttributes: true,
-								keepClosingSlash: true,
-								minifyJS: true,
-								minifyCSS: true,
-								minifyURLs: true,
-							},
-						}
-						: undefined
-				)
-			),
-			new HtmlWebpackPlugin(
-				Object.assign(
-					{},
-					{
-						inject: true,
-						template: paths.appOrderHtml,
-						fileName: 'order.html',
-						chunks:['order']
-					},
-					isEnvProduction
-						? {
-							minify: {
-								removeComments: true,
-								collapseWhitespace: true,
-								removeRedundantAttributes: true,
-								useShortDoctype: true,
-								removeEmptyAttributes: true,
-								removeStyleLinkTypeAttributes: true,
-								keepClosingSlash: true,
-								minifyJS: true,
-								minifyCSS: true,
-								minifyURLs: true,
-							},
-						}
-						: undefined
-				)
-			),
+			}),
 			// Inlines the webpack runtime script. This script is too small to warrant
 			// a network request.
 			// https://github.com/facebook/create-react-app/issues/5358
@@ -669,24 +600,24 @@ module.exports = function (webpackEnv) {
 			//   `index.html`
 			// - "entrypoints" key: Array of files which are included in `index.html`,
 			//   can be used to reconstruct the HTML if necessary
-			new ManifestPlugin({
-				fileName: 'asset-manifest.json',
-				publicPath: paths.publicUrlOrPath,
-				generate: (seed, files, entrypoints) => {
-					const manifestFiles = files.reduce((manifest, file) => {
-						manifest[file.name] = file.path;
-						return manifest;
-					}, seed);
-					const entrypointFiles = entrypoints.index.filter(
-						fileName => !fileName.endsWith('.map')
-					);
-
-					return {
-						files: manifestFiles,
-						entrypoints: entrypointFiles,
-					};
-				},
-			}),
+			// new ManifestPlugin({
+			// 	fileName: 'asset-manifest.json',
+			// 	publicPath: paths.publicUrlOrPath,
+			// 	generate: (seed, files, entrypoints) => {
+			// 		const manifestFiles = files.reduce((manifest, file) => {
+			// 			manifest[file.name] = file.path;
+			// 			return manifest;
+			// 		}, seed);
+			// 		const entrypointFiles = entrypoints.index.filter(
+			// 			fileName => !fileName.endsWith('.map')
+			// 		);
+			//
+			// 		return {
+			// 			files: manifestFiles,
+			// 			entrypoints: entrypointFiles,
+			// 		};
+			// 	},
+			// }),
 			// Moment.js is an extremely popular library that bundles large locale files
 			// by default due to how webpack interprets its code. This is a practical
 			// solution that requires the user to opt into importing specific locales.
