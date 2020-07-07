@@ -1,0 +1,42 @@
+.journey {
+    height: 75px;
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.journey-station {
+    flex: 1;
+    font-weight: 500;
+    font-size: 24px;
+    color: #333;
+}
+
+.journey-input {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    background-color: #fff;
+    border: 0;
+    outline: 0;
+}
+
+.journey-from {
+
+}
+
+.journey-switch {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.icon-switch {
+    width: 28px;
+    height: 28px;
+}
+
+
+.journey-to {
+    text-align: right;
+}

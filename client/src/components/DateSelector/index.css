@@ -1,0 +1,101 @@
+.date-selector {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.date-selector-header {
+    position: relative;
+    display: flex;
+    height: 45px;
+    color: #fff;
+    background-color: #00c9e2;
+    padding: 0 16px 0 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-selector-header .arrow-back {
+    position: absolute;
+    left: 12px;
+    top: 1px;
+    margin-left: -12px;
+    width: 42px;
+    height: 42px;
+}
+
+.date-table {
+    display: block;
+    width: 100%;
+}
+
+.date-title {
+    background-color: #f7f7f7;
+    font-size: 15px;
+    color: #212121;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: .24rem;
+    z-index: 9;
+}
+
+.date-table thead, tbody {
+    display: block;
+    text-align: center;
+}
+
+.date-table tr {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.date-table td {
+    display: block;
+    width: 100%;
+}
+
+.date-table th {
+    font-size: 12px;
+    height: 30px;
+    line-height: 24px;
+    font-weight: normal;
+    display: block;
+    flex: 1;
+}
+
+.date-table th.weekend {
+    color: #00afc7;
+}
+
+.date-table .date-table-day {
+    font-size: 15px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    position: relative;
+    color: #616161;
+    margin: 0 4px;
+}
+
+.date-table .date-table-day.td-disabled {
+    color: #bdbdbd !important;
+}
+
+.date-table .date-table-day.td-active {
+    background-color: #00c9e2;
+    color: #fff;
+}
+
+.date-table .date-table-day.td-weekly {
+    color: #ff8300;
+}
+

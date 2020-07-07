@@ -3,7 +3,7 @@ import './index.css'
 
 export default () => {
 	return(
-		<div className="header">
+		<div className="">
 
 		</div>
 	)

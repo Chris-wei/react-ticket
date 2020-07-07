@@ -37,7 +37,7 @@ export function setCityData (cityData) {
 
 export function toggleHighSpeed () {
 	return (dispatch, getState) => {
-		const { highSpeed } = getState();
+		const { highSpeed } = getState().state;
 		dispatch({
 			type: actionTypes.ACTION_SET_HIGH_SPEED,
 			payload: !highSpeed
@@ -68,13 +68,15 @@ export function hideCitySelector () {
 
 export function setSelectedCity (city) {
 	return (dispatch, getState) => {
-		const { currentSelectingLeftCity } = getState();
+		const { currentSelectingLeftCity } = getState().state;
 
 		if ( currentSelectingLeftCity ) {
 			dispatch(setFrom(city))
 		} else {
 			dispatch(setTo(city))
 		}
+
+		dispatch(hideCitySelector())
 	}
 }
 
@@ -94,8 +96,37 @@ export function hideDateSelector () {
 
 export function exchangeFromTo () {
 	return (dispatch, getState) => {
-		const { from, to } = getState()
+		const { from, to } = getState().state;
 		dispatch(setFrom(to))
 		dispatch(setTo(from))
+	}
+}
+
+export function fetchCityData () {
+	return (dispatch, getState) => {
+		const { isLoadingCityData } = getState().state;
+		if ( isLoadingCityData ) return;
+
+		const cache = JSON.parse(localStorage.getItem('city_data_cache')||'{}');
+
+		if( Date.now() < cache.expires ){
+			return dispatch(setCityData(cache.data))
+		}
+
+		dispatch(setIsLoadingCityData(true));
+
+		fetch('/rest/cities?_' + Date.now())
+			.then(res => res.json())
+			.then(res => {
+				const { cityData } = res;
+				dispatch(setCityData(cityData))
+				localStorage.setItem('city_data_cache', JSON.stringify({
+					expires: Date.now() + 600 * 1000,
+					data: cityData
+				}))
+				dispatch(setIsLoadingCityData(false));
+			}).catch(() => {
+			dispatch(setIsLoadingCityData(false));
+		})
 	}
 }
