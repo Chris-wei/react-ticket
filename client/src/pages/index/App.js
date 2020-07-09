@@ -1,4 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
+import dayjs from 'dayjs'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import './App.css';
@@ -10,7 +11,8 @@ import {
 	setDepartDate,
 	setSelectedCity,
 	showCitySelector,
-	showDateSelector
+	showDateSelector,
+	toggleHighSpeed
 } from './store/actions'
 //components
 import Header from '../../components/Header'
@@ -31,7 +33,8 @@ function App (props) {
 		isCitySelectorVisible,
 		cityData,
 		isLoadingCityData,
-		isDateSelectorVisible
+		isDateSelectorVisible,
+		highSpeed
 	} = props;
 
 	const onBack = useCallback(() => {
@@ -73,6 +76,18 @@ function App (props) {
 		dispatch(hideDateSelector())
 	}, [dispatch])
 
+	const highSpeedCbs = useMemo(() => {
+		return bindActionCreators(({
+			toggle: toggleHighSpeed
+		}), dispatch)
+	}, [dispatch])
+
+
+	const onSubmit = useCallback(() => {
+		let date = dayjs(departDate).format('YYYY-MM-DD')
+		window.location.href = `./query.html?from=${from}&to=${to}&date=${date}&highSpeed=${Number(highSpeed)}`
+	}, [from, to, departDate, highSpeed])
+
 	return (
 		<div className="App">
 			<Header title={'火车票'} onBack={onBack}/>
@@ -87,8 +102,8 @@ function App (props) {
 					time={departDate}
 					{...departDateCbs}
 				/>
-				<HighSpeed/>
-				<Submit/>
+				<HighSpeed highSpeed={highSpeed} {...highSpeedCbs}/>
+				<Submit onSubmit={onSubmit}/>
 			</div>
 			{/*	城市选择*/}
 			<CitySelector

@@ -1,0 +1,11 @@
+.submit-btn{
+    background: #ff8300;
+    border-radius: 24px;
+    font-size: 18px;
+    color: #fff;
+    margin: 10px 20px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    display: block;
+}

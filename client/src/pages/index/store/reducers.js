@@ -4,7 +4,7 @@ const defaultState = {
 	from: '北京',
 	to: '上海',
 	//出发日期
-	departDate: '',
+	departDate: Date.now(),
 	// 城市选择
 	isCitySelectorVisible: false,
 	currentSelectingLeftCity: false,

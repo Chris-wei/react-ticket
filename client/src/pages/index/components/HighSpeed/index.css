@@ -1,0 +1,48 @@
+.high-speed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.high-speed .high-speed-label {
+    color: #616161;
+    font-size: 14px;
+}
+
+.high-speed .high-speed-switch{
+    position: relative;
+    display: inline-block;
+    box-sizing: content-box;
+    width: 50px;
+    height: 25px;
+    background-color: #f2f2f2;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 13px;
+    cursor: pointer;
+    -webkit-transition: background-color 0.3s;
+    transition: background-color 0.3s;
+}
+
+.high-speed .high-speed-switch.switch-on{
+    background-color: #00c9e2;
+}
+
+.high-speed .high-speed-switch .switch-node{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 25px;
+    height: 25px;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s cubic-bezier(0.3, 1.05, 0.4, 1.05), -webkit-transform 0.3s cubic-bezier(0.3, 1.05, 0.4, 1.05);
+}
+
+.high-speed .high-speed-switch.switch-on .switch-node{
+    transform: translateX(25px);
+}
