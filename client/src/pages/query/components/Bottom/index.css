@@ -1,0 +1,36 @@
+.filter-bot {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    height: 56px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ececec;
+    max-width: 540px;
+}
+
+.filter-item {
+    flex: 1;
+    color: #999;
+}
+
+.filter-item.active{
+    color: #4cc;
+}
+
+.filter-item .filter-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.filter-item .filter-name {
+    margin-top: 5px;
+    font-size: 12px;
+    text-align: center;
+}

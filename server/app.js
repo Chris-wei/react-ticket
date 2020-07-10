@@ -44,6 +44,30 @@ app.get('/rest/search', function (req, res) {
 	res.end();
 })
 
+app.get('/rest/query', function (req, res) {
+	const {from,to,date} = req.query;
+	const request_url = `https://touch.train.qunar.com/api/train/trains2s?startStation=${from}&endStation=${to}&date=${date}&wakeup=1`;
+
+	const response = request('GET',request_url);
+
+	const result = JSON.parse(response.getBody('utf-8'))
+
+	if( result.status === 0 ){
+		res.json({
+			err_code: 0,
+			data : result.dataMap,
+			msg: 'success'
+		})
+	}else{
+		res.json({
+			err_code: 0,
+			data : {},
+			msg: 'success'
+		})
+	}
+	res.end();
+})
+
 
 app.listen(port, () => {
 	console.log(`server is running at ${port}`)
