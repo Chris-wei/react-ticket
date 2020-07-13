@@ -50,8 +50,14 @@ export default (state = defaultState, action) => {
 				departDate: action.payload
 			})
 		case actionTypes.ACTION_SET_HIGH_SPEED:
+			const newCheckedTrainTypes = {}
+			if ( action.payload ) {
+				newCheckedTrainTypes[1] = true;
+				newCheckedTrainTypes[5] = true;
+			}
 			return Object.assign({}, state, {
-				highSpeed: action.payload
+				highSpeed: action.payload,
+				checkedTrainTypes: newCheckedTrainTypes
 			})
 		case actionTypes.ACTION_SET_TRAIN_LIST:
 			return Object.assign({}, state, {
@@ -78,8 +84,13 @@ export default (state = defaultState, action) => {
 				trainTypes: action.payload
 			})
 		case actionTypes.ACTION_SET_CHECKED_TRAIN_TYPES:
+			let highSpeed = false;
+
+			if ( action.payload[1] && action.payload[5] ) highSpeed = true;
+
 			return Object.assign({}, state, {
-				checkedTrainTypes: action.payload
+				checkedTrainTypes: action.payload,
+				highSpeed
 			})
 		case actionTypes.ACTION_SET_DEPART_STATIONS:
 			return Object.assign({}, state, {

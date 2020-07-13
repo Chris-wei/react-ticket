@@ -17,7 +17,15 @@ import {
 	toggleHighSpeed,
 	toggleIsFiltersVisible,
 	toggleOnlyTickets,
-	toggleOrderType
+	toggleOrderType,
+	setCheckedTicketTypes,
+	setCheckedTrainTypes,
+	setCheckedDepartStations,
+	setCheckedArriveStations,
+	setDepartTimeStart,
+	setDepartTimeEnd,
+	setArriveTimeStart,
+	setArriveTimeEnd
 } from "./store/actions";
 import URI from 'urijs'
 import dayjs from 'dayjs'
@@ -40,6 +48,10 @@ function App (props) {
 		searchParsed,
 		orderType,
 		onlyTickets,
+		ticketTypes,
+		trainTypes,
+		departStations,
+		arriveStations,
 		isFiltersVisible,
 		checkedTicketTypes,
 		checkedTrainTypes,
@@ -60,7 +72,7 @@ function App (props) {
 		dispatch(setFrom(from))
 		dispatch(setTo(to))
 		dispatch(setDepartDate(h0(dayjs(date).valueOf())))
-		dispatch(setHighSpeed(Boolean(highSpeed)))
+		dispatch(setHighSpeed(Boolean(Number(highSpeed))))
 		dispatch(setSearchParsed(true))
 	}, [dispatch])
 
@@ -131,7 +143,15 @@ function App (props) {
 			toggleHighSpeed,
 			toggleOrderType,
 			toggleOnlyTickets,
-			toggleIsFiltersVisible
+			toggleIsFiltersVisible,
+			setCheckedTicketTypes,
+			setCheckedTrainTypes,
+			setCheckedDepartStations,
+			setCheckedArriveStations,
+			setDepartTimeStart,
+			setDepartTimeEnd,
+			setArriveTimeStart,
+			setArriveTimeEnd
 		}, dispatch)
 	}, [dispatch])
 
@@ -156,6 +176,18 @@ function App (props) {
 				onlyTickets={onlyTickets}
 				orderType={orderType}
 				isFiltersVisible={isFiltersVisible}
+				ticketTypes={ticketTypes}
+				trainTypes={trainTypes}
+				departStations={departStations}
+				arriveStations={arriveStations}
+				checkedTicketTypes={checkedTicketTypes}
+				checkedTrainTypes={checkedTrainTypes}
+				checkedDepartStations={checkedDepartStations}
+				checkedArriveStations={checkedArriveStations}
+				departTimeStart={departTimeStart}
+				departTimeEnd={departTimeEnd}
+				arriveTimeStart={arriveTimeStart}
+				arriveTimeEnd={arriveTimeEnd}
 				{...bottomCbs}/>
 		</div>
 	);

@@ -78,7 +78,7 @@ export function setTicketTypes (ticketTypes) {
 	}
 }
 
-export function setChedkedTicketTypes (checkedTicketTypes) {
+export function setCheckedTicketTypes (checkedTicketTypes) {
 	return {
 		type: actionTypes.ACTION_SET_CHECKED_TICKET_TYPES,
 		payload: checkedTicketTypes
