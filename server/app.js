@@ -24,20 +24,20 @@ app.get('/rest/search', function (req, res) {
 
 	const request_url = `https://touch.train.qunar.com/api/train/TrainStationSuggest?keyword=${key}&rtype=4`;
 
-	const response = request('GET',request_url);
+	const response = request('GET', request_url);
 
 	const result = JSON.parse(response.getBody('utf-8'))
 
-	if( result.status === 0 ){
+	if ( result.status === 0 ) {
 		res.json({
 			err_code: 0,
-			data : result.dataMap.result,
+			data: result.dataMap.result,
 			msg: 'success'
 		})
-	}else{
+	} else {
 		res.json({
 			err_code: 0,
-			data : [],
+			data: [],
 			msg: 'success'
 		})
 	}
@@ -45,26 +45,48 @@ app.get('/rest/search', function (req, res) {
 })
 
 app.get('/rest/query', function (req, res) {
-	const {from,to,date} = req.query;
+	const { from, to, date } = req.query;
 	const request_url = `https://touch.train.qunar.com/api/train/trains2s?startStation=${from}&endStation=${to}&date=${date}&wakeup=1`;
 
-	const response = request('GET',request_url);
+	const response = request('GET', request_url);
 
 	const result = JSON.parse(response.getBody('utf-8'))
 
-	if( result.status === 0 ){
+	if ( result.status === 0 ) {
 		res.json({
 			err_code: 0,
-			data : result.dataMap,
+			data: result.dataMap,
 			msg: 'success'
 		})
-	}else{
+	} else {
 		res.json({
 			err_code: 0,
-			data : {},
+			data: {},
 			msg: 'success'
 		})
 	}
+	res.end();
+})
+
+app.get('/rest/ticket', async function (req, res) {
+	const { startStation, endStation, trainNumber, date } = req.query;
+
+	if ( result.code === 0 ) {
+		res.json({
+			err_code: 0,
+			data:{
+
+			},
+			msg: 'success'
+		})
+	}
+
+
+	res.json({
+		err_code: 0,
+		data: {},
+		msg: 'success'
+	})
 	res.end();
 })
 
